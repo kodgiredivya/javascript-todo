@@ -1,0 +1,109 @@
+* {
+  margin: 0;
+}
+
+.body {
+  min-height: 100vh;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.5))), url("../images/yellow-list-top-view_23-2148475388.webp");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/yellow-list-top-view_23-2148475388.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+.body .card {
+  background-color: transparent;
+}
+
+.body .card .card-header {
+  background-color: #ecec28;
+  border: none;
+  color: white;
+}
+
+.body .card label {
+  color: white;
+  font-weight: 500;
+}
+
+.body .card input,
+.body .card select {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 0;
+  color: white;
+}
+
+.body .card input:focus,
+.body .card select:focus {
+  background-color: transparent;
+}
+
+.body .card select option {
+  color: black;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.body .card .addbtn {
+  background-color: #ecec28;
+  border: none;
+  color: white;
+}
+
+.body .card .addbtn:focus {
+  border-style: none;
+  border: none;
+}
+
+.body .card .card-body {
+  color: white;
+  border: 1px solid white;
+}
+
+.modal-body {
+  border: 1px solid white;
+  border-top: none;
+}
+
+.modal-body label {
+  color: white;
+  font-weight: 500;
+}
+
+.modal-body input,
+.modal-body select {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 0;
+  color: white;
+}
+
+.modal-body input::-webkit-input-placeholder,
+.modal-body select::-webkit-input-placeholder {
+  color: white;
+}
+
+.modal-body input:-ms-input-placeholder,
+.modal-body select:-ms-input-placeholder {
+  color: white;
+}
+
+.modal-body input::-ms-input-placeholder,
+.modal-body select::-ms-input-placeholder {
+  color: white;
+}
+
+.modal-body input::placeholder,
+.modal-body select::placeholder {
+  color: white;
+}
+
+.modal-body input:focus,
+.modal-body select:focus {
+  background-color: transparent;
+}
+
+.modal-body select option {
+  color: black;
+  background-color: rgba(0, 0, 0, 0);
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Todo In BS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./assets/sass/style.css">
+</head>
+
+<body>
+    <div class="container-fluid body">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <div class="card mt-3">
+                    <div class="card-header text-light text-center">
+                        <h4>TODO</h4>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <label for="task" class="form-label">Task Title</label>
+                            <input type="text" class="form-control" id="task" value="task"
+                                placeholder="Enter Your task" />
+
+                        </div>
+
+                        <div class="mt-2">
+                            <label for="desc" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="desc" value="desc"
+                                placeholder="Enter task description" />
+
+                        </div>
+
+                        <div class="mt-2">
+                            <label for="priority"> Priority</label>
+                            <select value="priority" class="form-select" id="priority">
+                                <option value="high">High</option>
+                                <option selected value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn addbtn w-100 mt-3" onclick="addToDO()">
+                            Add Todo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- output start -->
+                <div id="output">
+                </div>
+                <!-- output end-->
+            </div>
+        </div>
+    </div>
+    <!-- edit Modal -->
+    <div class="modal fade" id="editModal">
+        <div class="modal-dialog">
+            <div class="modal-content bg-transparent text-light">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="editModal">Edit Todo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label for="mtask" class="form-label">First task</label>
+                        <input type="text" class="form-control" id="mtask" placeholder="Enter Your task" />
+                    </div>
+
+                    <div class="mt-2">
+                        <label for="mdesc" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="mdesc" placeholder="Enter task description" />
+                    </div>
+
+                    <div class="mt-2">
+                        <label for="mpriority"> Priority</label>
+                        <select class="form-select" id="mpriority">
+                            <option selected>Select Priority</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-outline-light w-100 mt-3">
+                        Update Todo
+                    </button>
+                    <button type="button" class="btn mt-2 w-100 btn-outline-danger" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content bg-transparent">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-light">
+                        Are you sure you want delete this todo ?
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body delete-body">
+                    <p class="text-center text-light mb-5">
+                        You can delete this todo at any time. If you change your mind, you
+                        might not be able to recover it
+                    </p>
+                    <div class="btn-group w-100">
+                        <button type="button" class="btn btn-danger" onclick="deleteTOdo()"
+                            data-bs-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal" aria-label="Close">NO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let todos = []
+        let deleteIndex
+
+        function addToDO() {
+            let usertask = document.querySelector("#task").value
+            let userdesc = document.querySelector("#desc").value
+            let userpriority = document.querySelector("#priority").value
+            todos.push({
+                task: usertask,
+                desc: userdesc,
+                priority: userpriority
+            })
+            console.log(todos);
+            display()
+        }
+        function display() {
+            let str = ""
+
+            for (let i = 0; i < todos.length; i++) {
+                let bg = ""
+
+                str +=
+                    ` 
+              <div class="card mt-4">
+                  <div
+                    class="card-header ${getBg(todos[i].priority)} d-flex justify-content-between"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#task${i}"
+                  >
+                    ${todos[i].task}
+                    
+                    <div>
+                      <!-- edit -->
+                      <button
+                        type="button"
+                        onclick="handleUpdateIndex(${i})"
+                        class="btn btn-sm btn-outline-light"
+                        data-bs-target="#editModal"
+                        data-bs-toggle="modal">
+                                                 <i class="bi bi-pencil-square"></i>
+                      </button>
+  
+                      <!-- //delete -->
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-light"
+                        data-bs-target="#deleteModal"
+                        data-bs-toggle="modal"
+                        onclick="handleDeleteIndex(${i})">
+                                                  <i class="bi bi-trash"></i>
+                      </button>
+  
+                    </div>
+                  </div>
+                  <div class="collapse" id="task${i}">
+                    <div class="card-body">${todos[i].desc}</div>
+                  </div>
+                </div>
+                `
+
+            }
+            document.querySelector("#output").innerHTML = str
+        }
+        function getBg(arg) {
+            switch (arg) {
+                case "high": return "bg-danger"
+                case "medium": return "bg-warning"
+                case "low": return "bg-info"
+                default: return ""
+            }
+
+        }
+        function handleDeleteIndex(arg) {
+            deleteIndex = arg
+        }
+        function deleteTOdo() {
+            todos.splice(deleteIndex, 1)
+            display()
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
